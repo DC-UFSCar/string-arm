@@ -1,12 +1,11 @@
 #!/bin/bash
 
 cd tests
-riscv64-linux-gnu-as ../hello.s -o hello.o && \
-riscv64-linux-gnu-ld hello.o -o hello.elf && \
-qemu-riscv64 ./hello.elf > hello.out
-echo $? >> hello.out
+riscv64-linux-gnu-as ../$1.s -o $1.o && \
+riscv64-linux-gnu-ld $1.o -o $1.elf && \
+qemu-riscv64 ./$1.elf < string.in > $1.out
 
-if diff hello.out hello.ok >/dev/null; then
+if diff $1.out $1.ok >/dev/null; then
     echo "OK"
     exit 0
 else
